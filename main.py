@@ -1,9 +1,12 @@
 import dns.resolver
+import art
 
 # setting the resolver
 my_resolver = dns.resolver.Resolver()
 
 # list of DNS servers to query for testing with a wrong IP address
+
+print(art.image)
 
 try:
     with open(file='servers.txt', mode='r') as server_file:
@@ -13,6 +16,8 @@ except FileNotFoundError:
     print('No "servers.txt" found, using default DNS-Server list:')
     for i in dns_list:
         print(i)
+
+# getting user input
 
 hostname = input('Please enter a hostname (e.g. google.com):\n')
 
@@ -33,6 +38,6 @@ print('Nameserver  Resolved IP')
 for entry in records_dict_list:
     for key in entry:
         if entry[key] == 'error':
-            print('🚫', key, entry[key])
+            print('🚫', key, '->', entry[key])
         else:
-            print('✅', key, entry[key])
+            print('✅', key, '->', entry[key])
