@@ -23,3 +23,4 @@ for entry in records_dict_list:
             print('🚫', key, entry[key])
         else:
             print('✅', key, entry[key])
+print('Done')
