@@ -27,6 +27,18 @@ def open_file():
             return dns_list
 
 
+def resolve_host(host, dnsserver):
+    records_dict_list_func = {}
+    try:
+        my_resolver.nameservers = [dnsserver]
+        answers = my_resolver.resolve(host, 'A')
+        records_dict_list_func = {str(server): str(answer) for answer in answers}
+    except dns.resolver.LifetimeTimeout:
+        records_dict_list_func = {str(server): 'error'}
+    finally:
+        return records_dict_list_func
+
+
 # Calling function for servers.txt file
 
 dns_server_list = open_file()
@@ -37,20 +49,12 @@ hostname = input('Please enter a hostname (e.g. google.com):\n')
 records_dict_list = []
 
 # iterate through server list
-
-for server in dns_server_list:
-    try:
-        my_resolver.nameservers = [server]
-        answers = my_resolver.resolve(hostname, 'A')
-        records_dict_list.append({str(server): str(answer) for answer in answers})
-    except dns.resolver.LifetimeTimeout:
-        records_dict_list.append({str(server): 'error'})
-
 print('Nameserver  Resolved IP')
-
-for entry in records_dict_list:
-    for key in entry:
-        if entry[key] == 'error':
-            print('🚫', key, '->', entry[key])
-        else:
-            print('✅', key, '->', entry[key])
+for server in dns_server_list:
+    funcset = resolve_host(hostname, server)
+    records_dict_list.append(funcset)
+    if funcset[server] == 'error':
+        # print(records_dict_list)
+        print('🚫', server, '->', funcset[server])
+    else:
+        print('✅',server, '->', funcset[server])
