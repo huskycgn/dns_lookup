@@ -23,8 +23,8 @@ def resolve_host_local(host):
     records_dict_list_local = {}
     # Find a way to get the local DNS IP address
     local_resolver = dns.resolver.Resolver()
-    answers = local_resolver.resolve(host, 'A')
     try:
+        answers = local_resolver.resolve(host, 'A')
         records_dict_list_local = {'Local-DNS': str(answer) for answer in answers}
     except:
         records_dict_list_local = {str('Local-DNS'): 'error'}
@@ -44,3 +44,5 @@ def resolve_host(host, dnsserver):
         records_dict_list_func = {str(dnsserver): 'error'}
     finally:
         return records_dict_list_func
+
+
