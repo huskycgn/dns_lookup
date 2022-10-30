@@ -6,26 +6,29 @@ my_resolver = dns.resolver.Resolver()
 
 # function for the resolve button
 def func_button_go():
-    for widgets in frame.winfo_children():
-        widgets.destroy()
+    global label_dict
+    # for widgets in frame.winfo_children():
+    #    widgets.destroy()
     queryhost = hostentry.get()
-    labelservers = Label(master=frame, anchor='w', text=f'Resolving {queryhost}')
-    labelservers.pack()
+    # labelservers = Label(master=frame, anchor='w', text=f'Resolving {queryhost}')
+    # labelservers.pack()
     for s in open_file():
         result = resolve_host(queryhost, s)
         for server in result:
             if result[server] == 'error':
                 resultstring = str(f"🚫 {server} -> {result[server]}")
-                labelservers = Label(master=frame, anchor='w', width=20)
+                # labelservers = Label(master=frame, anchor='w', width=20)
                 # using pack here for simplicity
-                labelservers.pack()
-                labelservers.config(text=resultstring)
+                label_dict[s].config(text=resultstring)
+                label_dict[s].update()
+                # labelservers.pack()
             else:
                 resultstring = str(f"✅ {server} -> {result[server]}")
-                labelservers = Label(master=frame, anchor='w', width=20)
+                # labelservers = Label(master=frame, anchor='w', width=20)
                 # using pack here for simplicity
-                labelservers.pack()
-                labelservers.config(text=resultstring)
+                label_dict[s].config(text=resultstring)
+                label_dict[s].update()
+                # labelservers.pack()
 
 
 servers_list = open_file()
@@ -60,7 +63,19 @@ frame = Frame(bd=4, highlightthickness=4)
 frame.grid(column=0, row=1, columnspan=2, rowspan=2)
 
 # Explanation label
-explabel = Label(frame, text='DNS Servers are configured in servers.txt')
+explabel = Label(frame, width=30, anchor='w', text='DNS Servers are configured in servers.txt')
 explabel.pack()
+
+# fill with dns entries:
+dns_list = open_file()
+
+label_dict = {}
+
+for s in dns_list:
+    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'))})
+for item in label_dict:
+    label_dict[item].pack()
+    # labelservers = Label(master=frame, anchor='w', width=20, text=s)
+    # labelservers.pack()
 
 window.mainloop()
