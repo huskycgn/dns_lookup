@@ -29,7 +29,7 @@ servers_list = open_file()
 window = Tk()
 window.title('DNS-Checker')
 window.geometry('500x350')
-window.config(pady=20, padx=20)
+window.config(pady=10, padx=10)
 
 # Define label for Entry
 
