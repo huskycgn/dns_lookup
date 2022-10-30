@@ -14,14 +14,10 @@ def func_button_go():
         for server in result:
             if result[server] == 'error':
                 resultstring = str(f"🚫 {server} -> {result[server]}")
-                # labelservers = Label(master=frame, anchor='w', width=20)
-                # using pack here for simplicity
                 label_dict[srv].config(text=resultstring)
                 label_dict[srv].update()
-                # labelservers.pack()
             else:
                 resultstring = str(f"✅ {server} -> {result[server]}")
-                # using pack here for simplicity
                 label_dict[srv].config(text=resultstring)
                 label_dict[srv].update()
 
