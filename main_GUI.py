@@ -13,11 +13,11 @@ def func_button_go():
         result = resolve_host(queryhost, srv)
         for server in result:
             if result[server] == 'error':
-                resultstring = str(f"🚫 {server} -> {result[server]}")
+                resultstring = str(f"🚫 {server} -> {result[server]} -> {queryhost}")
                 label_dict[srv].config(text=resultstring)
                 label_dict[srv].update()
             else:
-                resultstring = str(f"✅ {server} -> {result[server]}")
+                resultstring = str(f"✅ {server} -> {result[server]} -> {queryhost}")
                 label_dict[srv].config(text=resultstring)
                 label_dict[srv].update()
 
@@ -28,7 +28,7 @@ servers_list = open_file()
 
 window = Tk()
 window.title('DNS-Checker')
-window.geometry('400x300')
+window.geometry('500x350')
 window.config(pady=20, padx=20)
 
 # Define label for Entry
@@ -64,7 +64,7 @@ dns_list = open_file()
 label_dict = {}
 
 for s in dns_list:
-    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'), width=25, anchor='w')})
+    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'), width=35, anchor='w')})
 for item in label_dict:
     label_dict[item].pack()
 
