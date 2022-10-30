@@ -1,5 +1,3 @@
-from tkinter import *
-
 import dns.resolver
 
 my_resolver = dns.resolver.Resolver()

@@ -7,28 +7,22 @@ my_resolver = dns.resolver.Resolver()
 # function for the resolve button
 def func_button_go():
     global label_dict
-    # for widgets in frame.winfo_children():
-    #    widgets.destroy()
     queryhost = hostentry.get()
-    # labelservers = Label(master=frame, anchor='w', text=f'Resolving {queryhost}')
-    # labelservers.pack()
-    for s in open_file():
-        result = resolve_host(queryhost, s)
+    for srv in open_file():
+        result = resolve_host(queryhost, srv)
         for server in result:
             if result[server] == 'error':
                 resultstring = str(f"🚫 {server} -> {result[server]}")
                 # labelservers = Label(master=frame, anchor='w', width=20)
                 # using pack here for simplicity
-                label_dict[s].config(text=resultstring)
-                label_dict[s].update()
+                label_dict[srv].config(text=resultstring)
+                label_dict[srv].update()
                 # labelservers.pack()
             else:
                 resultstring = str(f"✅ {server} -> {result[server]}")
-                # labelservers = Label(master=frame, anchor='w', width=20)
                 # using pack here for simplicity
-                label_dict[s].config(text=resultstring)
-                label_dict[s].update()
-                # labelservers.pack()
+                label_dict[srv].config(text=resultstring)
+                label_dict[srv].update()
 
 
 servers_list = open_file()
@@ -45,7 +39,7 @@ window.config(pady=20, padx=20)
 hostnamelabel = Label(text='Query Host:')
 hostnamelabel.grid(column=0, row=0)
 
-# Define entrybox
+# Define entry box
 
 hostentry = Entry()
 hostentry.insert(0, 'google.com')
@@ -69,13 +63,12 @@ explabel.pack()
 # fill with dns entries:
 dns_list = open_file()
 
+# Creating a dict with DNS entries to display in the window.
 label_dict = {}
 
 for s in dns_list:
     label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'))})
 for item in label_dict:
     label_dict[item].pack()
-    # labelservers = Label(master=frame, anchor='w', width=20, text=s)
-    # labelservers.pack()
 
 window.mainloop()

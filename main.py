@@ -8,9 +8,7 @@ my_resolver = dns.resolver.Resolver()
 
 print(art.image)
 
-
 # Open servers.txt - create new servers.txt if none is found
-
 
 
 # Calling function for servers.txt file
@@ -31,4 +29,4 @@ for server in dns_server_list:
         # print(records_dict_list)
         print('🚫', server, '->', funcset[server])
     else:
-        print('✅',server, '->', funcset[server])
+        print('✅', server, '->', funcset[server])
