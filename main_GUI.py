@@ -9,6 +9,13 @@ my_resolver = dns.resolver.Resolver()
 def func_button_go():
     global label_dict
     queryhost = hostentry.get()
+    local_result = resolve_host_local(queryhost)
+    if local_result['Local-DNS'] == 'error':
+        resultstring = str(f"🚫 Local-DNS -> {local_result['Local-DNS']} -> {queryhost}")
+    else:
+        resultstring = str(f"✅ Local-DNS -> {local_result['Local-DNS']} -> {queryhost}")
+    local_dns_label.config(text=resultstring)
+    local_dns_label.update()
     for srv in open_file():
         result = resolve_host(queryhost, srv)
         for server in result:
@@ -63,8 +70,13 @@ frame.grid(column=0, row=4, columnspan=1, rowspan=2)
 # fill with dns entries:
 dns_list = open_file()
 
+# Set label for local-DNS query
+local_dns_label = Label(frame, text=str('🤷 Local-DNS -> unknown'), width=50, anchor='w')
+local_dns_label.pack()
+
 # Creating a dict with DNS entries to display in the window.
 label_dict = {}
+
 
 for s in dns_list:
     label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'), width=50, anchor='w')})
