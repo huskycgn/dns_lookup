@@ -1,27 +1,31 @@
-import dns.resolver
-from tkinter import *
 from dnsfunctions import *
 
 # setting the resolver
 my_resolver = dns.resolver.Resolver()
 
 
+# function for the resolve button
 def func_button_go():
+    for widgets in frame.winfo_children():
+        widgets.destroy()
     queryhost = hostentry.get()
+    labelservers = Label(master=frame, anchor='w', text=f'Resolving {queryhost}')
+    labelservers.pack()
     for s in open_file():
         result = resolve_host(queryhost, s)
         for server in result:
             if result[server] == 'error':
-                resultstring = '🚫', server, '->', result[server]
-                labelservers = Label(master=frame, anchor='w')
+                resultstring = str(f"🚫 {server} -> {result[server]}")
+                labelservers = Label(master=frame, anchor='w', width=20)
+                # using pack here for simplicity
+                labelservers.pack()
+                labelservers.config(text=resultstring)
             else:
-                resultstring = '✅', server, '->', result[server]
-                labelservers = Label(master=frame, anchor='w')
-            labelservers.pack()
-            labelservers.config(text=resultstring)
-
-
-# Open servers.txt - create new servers.txt if none is found
+                resultstring = str(f"✅ {server} -> {result[server]}")
+                labelservers = Label(master=frame, anchor='w', width=20)
+                # using pack here for simplicity
+                labelservers.pack()
+                labelservers.config(text=resultstring)
 
 
 servers_list = open_file()
@@ -54,5 +58,9 @@ gobutton.grid(column=2, row=0)
 
 frame = Frame(bd=4, highlightthickness=4)
 frame.grid(column=0, row=1, columnspan=2, rowspan=2)
+
+# Explanation label
+explabel = Label(frame, text='DNS Servers are configured in servers.txt')
+explabel.pack()
 
 window.mainloop()

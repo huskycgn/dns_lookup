@@ -6,6 +6,7 @@ my_resolver = dns.resolver.Resolver()
 
 
 def open_file():
+    """Open servers.txt - create new servers.txt if none is found."""
     try:
         with open(file='servers.txt', mode='r') as server_file:
             dns_list = server_file.read().splitlines()
@@ -22,6 +23,7 @@ def open_file():
 
 
 def resolve_host(host, dnsserver):
+    """Does the actual resolving - expects hostname and dnsserver as strings."""
     records_dict_list_func = {}
     try:
         my_resolver.nameservers = [dnsserver]
