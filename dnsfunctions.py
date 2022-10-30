@@ -11,7 +11,7 @@ def open_file():
             return dns_list
     except FileNotFoundError:
         dns_list = ['8.8.8.8', '8.8.4.4', '192.168.178.1']
-        print('No "servers.txt" found, using default DNS-Server list:\n'
+        print('No "servers.txt" found, using default DNS-Server list\n'
               'and creating new servers.txt')
         with open(file='servers.txt', mode='w') as server_file:
             for i in dns_list:
