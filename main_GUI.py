@@ -1,4 +1,5 @@
 from dnsfunctions import *
+from tkinter import *
 
 # setting the resolver
 my_resolver = dns.resolver.Resolver()
@@ -67,7 +68,7 @@ dns_list = open_file()
 label_dict = {}
 
 for s in dns_list:
-    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'))})
+    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'), width=25, anchor='w')})
 for item in label_dict:
     label_dict[item].pack()
 
