@@ -33,29 +33,32 @@ window.config(pady=20, padx=20)
 
 # Define label for Entry
 
-hostnamelabel = Label(text='Query Host:')
+hostnamelabel = Label(anchor='e', text='Query Host:')
 hostnamelabel.grid(column=0, row=0)
 
 # Define entry box
 
 hostentry = Entry()
+hostentry.config(width=20)
 hostentry.insert(0, 'google.com')
 hostentry.focus_set()
-hostentry.grid(column=1, row=0)
+hostentry.grid(column=0, row=1)
 
 # Define Button
 
-gobutton = Button(text='Query!', command=func_button_go)
-gobutton.grid(column=2, row=0)
+gobutton = Button(text='Query!', anchor='center', command=func_button_go)
+gobutton.grid(column=0, row=2)
+
+# Explanation label
+explabel = Label(width=30, anchor='w', text='DNS Servers are configured in servers.txt')
+explabel.grid(column=0, row=3)
+
 
 # Define frame for output
 
-frame = Frame(bd=4, highlightthickness=4)
-frame.grid(column=0, row=1, columnspan=2, rowspan=2)
+frame = Frame(bd=0, highlightthickness=1, bg='black')
+frame.grid(column=0, row=4, columnspan=1, rowspan=2)
 
-# Explanation label
-explabel = Label(frame, width=30, anchor='w', text='DNS Servers are configured in servers.txt')
-explabel.pack()
 
 # fill with dns entries:
 dns_list = open_file()
@@ -64,7 +67,7 @@ dns_list = open_file()
 label_dict = {}
 
 for s in dns_list:
-    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'), width=35, anchor='w')})
+    label_dict.update({s: Label(frame, text=str(f'🤷 {s} -> unknown'), width=50, anchor='w')})
 for item in label_dict:
     label_dict[item].pack()
 
