@@ -3,9 +3,12 @@ import dns.resolver
 
 def open_file():
     """Open servers.txt - create new servers.txt if none is found."""
+    local_resolver = dns.resolver.Resolver()
+    local_dns = local_resolver.nameservers[0]
     try:
         with open(file='./servers.txt', mode='r') as server_file:
             dns_list = server_file.read().splitlines()
+            dns_list.insert(0, local_dns)
             return dns_list
     except FileNotFoundError:
         dns_list = ['8.8.8.8', '8.8.4.4', '192.168.178.1']
@@ -16,20 +19,6 @@ def open_file():
                 server_file.writelines(f'{i}\n')
                 print(i)
             return dns_list
-
-
-def resolve_host_local(host):
-    """resolves the request with system DNS."""
-    records_dict_list_local = {}
-    # Find a way to get the local DNS IP address
-    local_resolver = dns.resolver.Resolver()
-    try:
-        answers = local_resolver.resolve(host, 'A')
-        records_dict_list_local = {'Local-DNS': str(answer) for answer in answers}
-    except:
-        records_dict_list_local = {str('Local-DNS'): 'error'}
-    finally:
-        return records_dict_list_local
 
 
 def resolve_host(host, dnsserver):
@@ -44,5 +33,3 @@ def resolve_host(host, dnsserver):
         records_dict_list_func = {str(dnsserver): 'error'}
     finally:
         return records_dict_list_func
-
-

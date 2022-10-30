@@ -2,18 +2,12 @@ from dnsfunctions import *
 from tkinter import *
 
 
-# function for the resolve button
+# function for the query button
 def func_button_go():
-    global label_dict, local_dns_label
+    global label_dict
     reset_entries()
+    # get host to resolve.
     queryhost = hostentry.get()
-    local_result = resolve_host_local(queryhost)
-    if local_result['Local-DNS'] == 'error':
-        resultstring = str(f"🚫 Local-DNS -> {local_result['Local-DNS']} -> {queryhost}")
-    else:
-        resultstring = str(f"✅ Local-DNS -> {local_result['Local-DNS']} -> {queryhost}")
-    local_dns_label.config(text=resultstring)
-    local_dns_label.update()
     for srv in open_file():
         result = resolve_host(queryhost, srv)
         for server in result:
@@ -34,10 +28,6 @@ def reset_entries():
         wi.destroy()
     dns_list = open_file()
 
-    # Set label for local-DNS query
-    local_dns_label = Label(frame, text=str('🤷 Local-DNS -> unknown'), width=50, anchor='w')
-    local_dns_label.pack()
-
     # Creating a dict with DNS entries to display in the window.
 
     for s in dns_list:
@@ -49,7 +39,6 @@ def reset_entries():
 servers_list = open_file()
 
 label_dict = {}
-local_dns_label = ''
 
 # Define window
 
