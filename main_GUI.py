@@ -71,7 +71,7 @@ explabel.grid(column=0, row=3)
 
 # Define frame for output
 
-frame = Frame(window, bd=0, highlightthickness=1, bg='black')
+frame = Frame(window, bd=0, highlightthickness=1)
 frame.grid(column=0, row=4, columnspan=1, rowspan=2)
 
 reset_entries()
